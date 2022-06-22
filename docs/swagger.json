@@ -1,0 +1,197 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "CAPSTONE API",
+      "version": "1.0",
+      "contact": {
+        "name": "Final Project Kelompok 1 FSW-8"
+      }
+    },
+    "tags": [
+      {
+        "name": "Users"
+      }
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/api/user/login": {
+        "post": {
+          "summary": "Login",
+          "description": "Retrieve access tokens",
+          "operationId": "login",
+          "responses": {
+            "200": {
+              "description": "A successful response.",
+              "schema": {
+                "$ref": "#/definitions/coreLoginResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/coreLoginRequest"
+              }
+            }
+          ],
+          "tags": [
+            "Users"
+          ]
+        }
+      },
+      "/api/user/register": {
+        "post": {
+          "summary": "Register",
+          "description": "Create new user",
+          "operationId": "register",
+          "responses": {
+            "200": {
+              "description": "A successful response.",
+              "schema": {
+                "$ref": "#/definitions/coreRegisterResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/coreRegisterRequest"
+              }
+            }
+          ],
+          "tags": [
+            "Users"
+          ]
+        }
+      },
+      "/api/user/logout": {
+        "delete": {
+          "summary": "Logout",
+          "description": "Remove existing bearer token",
+          "operationId": "delete token",
+          "security": [ { "BearerTokenAuth": [] } ],
+          "responses": {
+            "200": {
+              "description": "A successful response.",
+              "schema": {
+                "properties": {}
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "tags": [
+            "Users"
+          ]
+        }
+      }
+    },
+    "definitions": {
+      "coreLoginRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "coreLoginResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          }
+        }
+      },
+      "coreRegisterRequest": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "confPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "coreRegisterResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          }
+        }
+      },
+      "protobufAny": {
+        "type": "object",
+        "properties": {
+          "@type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": {}
+      },
+      "rpcStatus": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/protobufAny"
+            }
+          }
+        }
+      }
+    },
+    "securityDefinitions": {
+      "BearerTokenAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  }
+  

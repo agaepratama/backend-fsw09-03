@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+const app = require('../app')
+const { PORT = 8000 } = process.env
+const cors = require("cors");
+
+app.use(cors({ credentials:true, origin:'http://localhost:8001' }))
+app.listen(PORT, () => {
+  console.log('Listening on port', PORT)
+})
